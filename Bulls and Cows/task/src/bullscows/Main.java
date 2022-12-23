@@ -1,40 +1,41 @@
 package bullscows;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
         /*
-         * Stage 1
+         * Stage 2
          */
-        System.out.println("""
-                The secret code is prepared: ****.
-                                
-                Turn 1. Answer:
-                1234
-                Grade: 1 cow.
-                                
-                Turn 2. Answer:
-                5678
-                Grade: 1 cow.
-                                
-                Turn 3. Answer:
-                9012
-                Grade: 1 bull and 1 cow.
-                                
-                Turn 4. Answer:
-                9087
-                Grade: 1 bull and 1 cow.
-                                
-                Turn 5. Answer:
-                1087
-                Grade: 1 cow.
-                                
-                Turn 6. Answer:
-                9205
-                Grade: 3 bulls.
-                                
-                Turn 7. Answer:
-                9305
-                Grade: 4 bulls.
-                Congrats! The secret code is 9305.""");
+        Scanner scanner = new Scanner(System.in);
+
+        String secretCode = "9305";
+        String[] secretCodeArr = secretCode.split("");
+
+        String line = scanner.nextLine();
+
+        int countCow = 0;
+        int countBull = 0;
+
+        for (int i = 0; i < secretCodeArr.length; i++) {
+            for (int j = 0; j < line.toCharArray().length; j++) {
+                if (secretCodeArr[i].matches(String.valueOf(line.charAt(j)))) {
+                    countCow++;
+                    if (i == j) {
+                        countBull++;
+                        countCow--;
+                    }
+                }
+            }
+        }
+        if (countBull == 0 && countCow == 0) {
+            System.out.printf("Grade: None. The secret code is %s.", secretCode);
+        } else if (countCow != 0 && countBull == 0) {
+            System.out.printf("Grade: %d cow(s). The secret code is %s.", countCow, secretCode);
+        } else {
+            System.out.printf("Grade: %d bull(s) and %d cow(s). The secret code is %s.", countBull, countCow, secretCode);
+        }
+
     }
 }
