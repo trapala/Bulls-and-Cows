@@ -8,11 +8,10 @@ public class Main {
          * Stage 2
          */
         Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
 
         String secretCode = "9305";
         String[] secretCodeArr = secretCode.split("");
-
-        String line = scanner.nextLine();
 
         int countCow = 0;
         int countBull = 0;
@@ -28,6 +27,7 @@ public class Main {
                 }
             }
         }
+
         if (countBull == 0 && countCow == 0) {
             System.out.printf("Grade: None. The secret code is %s.", secretCode);
         } else if (countCow != 0 && countBull == 0) {
