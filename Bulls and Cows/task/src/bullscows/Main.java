@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         /*
-         * Stage 4
+         * Stage 5
          */
         Scanner scanner = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
