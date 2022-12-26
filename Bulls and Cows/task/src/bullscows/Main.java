@@ -41,16 +41,38 @@ public class Main {
         boolean flagEnd = false;
 
         // input length of secret number
-        System.out.println("Please, enter the secret code's length:");
-        int lengthOfSecretNumber = scanner.nextInt();
+        String str1 = null;
+        int lengthOfSecretNumber = 0;
+        try {
+            System.out.println("Please, enter the secret code's length:");
+            str1 = scanner.nextLine();
+            lengthOfSecretNumber = Integer.parseInt(str1);
 
-        if (lengthOfSecretNumber > 36 || lengthOfSecretNumber < 3) {
+        } catch (NumberFormatException e) {
+            System.out.printf("Error: \"%s\" isn't a valid number.", str1);
+            System.exit(0);
+        }
+
+        if (lengthOfSecretNumber > 36) {
             System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique chars.\n", lengthOfSecretNumber);
         }
 
         // input length of possible symbols
-        System.out.println("Input the number of possible symbols in the code:");
-        int lengthOfPossibleSymbols = scanner.nextInt();
+        String str2 = null;
+        int lengthOfPossibleSymbols = 0;
+        try {
+            System.out.println("Input the number of possible symbols in the code:");
+            str2 = scanner.nextLine();
+            lengthOfPossibleSymbols = Integer.parseInt(str2);
+        } catch (NumberFormatException e) {
+            System.out.printf("Error: \"%s\" isn't a valid number.", str2);
+            System.exit(0);
+        }
+
+        if (lengthOfPossibleSymbols < lengthOfSecretNumber) {
+            System.out.printf("Error: it's not possible to generate a code with a length of %d with %d unique symbols.", lengthOfPossibleSymbols, lengthOfSecretNumber);
+            System.exit(0);
+        }
 
         // generate random secret number
         String secretNumber = RandGeneratedStr(lengthOfSecretNumber, lengthOfPossibleSymbols);
@@ -62,7 +84,7 @@ public class Main {
         } else if (lengthOfPossibleSymbols <= 10) {
             System.out.printf("The secret is prepared: %s (0-%s).\n", generateStars(lengthOfSecretNumber), alphaNumericStr.charAt(lengthOfPossibleSymbols - 1));
         } else if (lengthOfPossibleSymbols > 36) {
-            System.out.println("Error");
+            System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
             System.exit(0);
         } else {
             System.out.printf("The secret is prepared: %s (0-9, a-%s).\n", generateStars(lengthOfSecretNumber), alphaNumericStr.charAt(lengthOfPossibleSymbols - 1));
