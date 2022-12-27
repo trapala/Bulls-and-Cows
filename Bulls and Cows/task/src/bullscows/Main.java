@@ -42,7 +42,7 @@ public class Main {
 
     public static void main(String[] args) {
         /*
-         * Stage 6
+         * Stage 7
          */
         int countTurns = 1;
         boolean flagEnd = false;
