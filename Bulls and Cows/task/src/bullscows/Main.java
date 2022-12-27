@@ -6,25 +6,32 @@ import java.util.Scanner;
 public class Main {
     static Scanner scanner = new Scanner(System.in);
 
-    static String alphaNumericStr = "0123456789abcdefghijklmnopqrstuvwxyz";
+    static final String ALPHA_NUMERIC_STR = "0123456789abcdefghijklmnopqrstuvwxyz";
 
     // generate secret number anonymization
+
     static String generateStars(int secretCodeLength) {
         return "*".repeat(Math.max(0, secretCodeLength));
     }
 
+    //  generate secret number
+
     static String RandGeneratedStr(int secretCodeLength, int symbolsLength) {
         Random random = new Random();
+
         // a list of characters to choose from in form of a string
 
-        char[] chars = symbolsLength < 36 ? alphaNumericStr.substring(0, symbolsLength).toCharArray() : alphaNumericStr.toCharArray();
+        char[] chars = symbolsLength < 36 ? ALPHA_NUMERIC_STR.substring(0, symbolsLength).toCharArray() : ALPHA_NUMERIC_STR.toCharArray();
 
-        // creating a StringBuffer size of AlphaNumericStr
+        // creating a StringBuffer size of alphaNumericStr substring
+
         StringBuilder s = new StringBuilder(secretCodeLength);
 
         for (int i = 0; i < secretCodeLength; i++) {
             int index = random.nextInt(chars.length - i - 1);
+
             // Simple swap
+
             char a = chars[i + index];
             chars[i + index] = chars[i];
             chars[i] = a;
@@ -40,7 +47,8 @@ public class Main {
         int countTurns = 1;
         boolean flagEnd = false;
 
-        // input length of secret number
+        // input length of secret number with error
+
         String str1 = null;
         int lengthOfSecretNumber = 0;
         try {
@@ -57,7 +65,8 @@ public class Main {
             System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique chars.\n", lengthOfSecretNumber);
         }
 
-        // input length of possible symbols
+        // input length of possible symbols with error
+
         String str2 = null;
         int lengthOfPossibleSymbols = 0;
         try {
@@ -69,28 +78,36 @@ public class Main {
             System.exit(0);
         }
 
+        // error
+
         if (lengthOfPossibleSymbols < lengthOfSecretNumber) {
             System.out.printf("Error: it's not possible to generate a code with a length of %d with %d unique symbols.", lengthOfPossibleSymbols, lengthOfSecretNumber);
             System.exit(0);
         }
 
-        // generate random secret number
+        // assignment to a variable generated random secret number
+
         String secretNumber = RandGeneratedStr(lengthOfSecretNumber, lengthOfPossibleSymbols);
 
-        // print info
+        // error and print info
+
         if (lengthOfPossibleSymbols == 1) {
             System.out.println("Error");
             System.exit(0);
         } else if (lengthOfPossibleSymbols <= 10) {
-            System.out.printf("The secret is prepared: %s (0-%s).\n", generateStars(lengthOfSecretNumber), alphaNumericStr.charAt(lengthOfPossibleSymbols - 1));
+            System.out.printf("The secret is prepared: %s (0-%s).\n", generateStars(lengthOfSecretNumber), ALPHA_NUMERIC_STR.charAt(lengthOfPossibleSymbols - 1));
         } else if (lengthOfPossibleSymbols > 36) {
             System.out.println("Error: maximum number of possible symbols in the code is 36 (0-9, a-z).");
             System.exit(0);
         } else {
-            System.out.printf("The secret is prepared: %s (0-9, a-%s).\n", generateStars(lengthOfSecretNumber), alphaNumericStr.charAt(lengthOfPossibleSymbols - 1));
+            System.out.printf("The secret is prepared: %s (0-9, a-%s).\n", generateStars(lengthOfSecretNumber), ALPHA_NUMERIC_STR.charAt(lengthOfPossibleSymbols - 1));
         }
 
+        // start game
+
         System.out.println("Okay, let's start a game!");
+
+        // algorithm counting Cows & Bulls
 
         while (!flagEnd) {
             System.out.println("Turn " + countTurns++ + ":");
@@ -108,6 +125,8 @@ public class Main {
                     countBulls++;
                 }
             }
+
+            // print ending part
 
             String bull = countBulls > 1 ? "bulls" : "bull";
             String cow = countCows > 1 ? "cows" : "cow";
